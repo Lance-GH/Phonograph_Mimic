@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="roundSelector" format="reference" />
+    <attr name="rectSelector" format="reference" />
+    <attr name="rectSelectorStrong" format="reference" />
+
+    <attr name="defaultFooterColor" format="reference" />
+
+    <attr name="toolbarPopupTheme" format="reference" />
+
+    <attr name="iconColor" format="reference" />
+    <attr name="dividerColor" format="reference" />
+
+</resources>
