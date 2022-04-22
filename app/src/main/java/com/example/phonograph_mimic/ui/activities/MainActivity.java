@@ -1,15 +1,21 @@
 package com.example.phonograph_mimic.ui.activities;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 
+import com.example.phonograph_mimic.App;
 import com.example.phonograph_mimic.R;
 import com.example.phonograph_mimic.ui.activities.base.AbsSlidingMusicPanelActivity;
+import com.example.phonograph_mimic.ui.fragments.mainactivity.library.LibraryFragment;
+import com.example.phonograph_mimic.util.PreferenceUtil;
 import com.google.android.material.navigation.NavigationView;
 
 import butterknife.BindView;
@@ -45,7 +51,47 @@ public class MainActivity extends AbsSlidingMusicPanelActivity {
             navigationView.setFitsSystemWindows(false); // for header to go below status bar
         }
 
+        if (savedInstanceState == null) {
+            setMusicChooser(PreferenceUtil.getInstance(this).getLastMusicChooser());
+        } else {
+            restoreCurrentFragment();
+        }
+
+        if (!checkShowIntro()) {
+
+        }
     }
+
+    private void setMusicChooser(int key) {
+        if (App.isProVersion() && key == FOLDERS) {
+            Toast.makeText(this, "Folder view is a Phonograph Pro feature.", Toast.LENGTH_LONG).show();
+            startActivity(new Intent(this, PurchaseActivity.class));
+            key = LIBRARY;
+        }
+
+        PreferenceUtil.getInstance(this).setLastMusicChooser(key);
+        switch (key) {
+            case LIBRARY:
+                navigationView.setCheckedItem(R.id.nav_library);
+                setCurrentFragment(LibraryFragment.newInstance());
+                break;
+
+            case FOLDERS:
+                navigationView.setCheckedItem(R.id.nav_folders);
+                setCurrentFragment(FoldersFragment.newInstance(this));
+                break;
+        }
+    }
+
+    private void setCurrentFragment(Fragment fragment) {
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment, null).commit();
+        currentFragment = (MainActivityFragmentCallbacks) fragment;
+    }
+
+    private void restoreCurrentFragment() {
+        currentFragment = (MainActivityFragmentCallbacks) getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+    }
+
 
     public interface MainActivityFragmentCallbacks {
         boolean handleBackPressed();

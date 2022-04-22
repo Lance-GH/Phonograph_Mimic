@@ -47,5 +47,7 @@ dependencies {
 
     implementation 'org.eclipse.mylyn.github:org.eclipse.egit.github.core:2.1.5'
 
+    implementation 'com.afollestad:material-cab:0.1.12'
+
 
 }

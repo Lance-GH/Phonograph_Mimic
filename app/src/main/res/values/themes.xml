@@ -5,4 +5,16 @@
     <style name="Theme.Phonograph_Mimic.Light" parent="Theme.Phonograph_Mimic.Base.Light" />
 
     <style name="Theme.Phonograph_Mimic.Black" parent="Theme.Phonograph_Mimic.Base.Black" />
+    
+    <style name="Toolbar">
+        <item name="titleMarginStart">16dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">?android:attr/actionBarSize</item>
+        <item name="android:theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
+        <item name="popupTheme">?toolbarPopupTheme</item>
+        <item name="android:elevation" tools:ignore="NewApi">@dimen/toolbar_elevation</item>
+        <item name="android:transitionName" tools:ignore="NewApi">toolbar</item>
+    </style>
+
+    <dimen name="toolbar_elevation">4dp</dimen>
 </resources>
